@@ -24,16 +24,21 @@ const cards = [
 
 
 function App() {
-  const [typeFilter, setTypeFilter] = useState("Todas");
+    const [search, setSearch] = useState("");
 
-const visibleCards = cards.filter(
-  (card) => typeFilter === "Todas" || card.type === typeFilter,
-);
+const visibleCards = cards
+  .filter((card) => typeFilter === "Todas" || card.type === typeFilter)
+  .filter((card) => card.name.toLowerCase().includes(search.toLowerCase()));
   return (
     <main>
       <h1>A minha coleção</h1>
       <p>
-  Tenho {cards.length} cartas ({visibleCards.length} à vista)
+  <input
+    type="text"
+    placeholder="Pesquisar pelo nome..."
+    value={search}
+    onChange={(e) => setSearch(e.target.value)}
+  />
 </p>
 
 <div>
