@@ -10,6 +10,9 @@
 //
 // Tarefa 1: substitui este array vazio pelo array cards do teu server
 // (o que fizeste na aula 2).
+
+import Card from "./Card.jsx";
+
 const cards = [
   { name: "Dragão de Cobalto", type: "Criatura", attack: 7, defense: 5 },
   { name: "Guardiã das Marés", type: "Criatura", attack: 4, defense: 8 },
@@ -23,6 +26,17 @@ function App() {
   return (
     <main>
       <h1>A minha coleção</h1>
+      <ul>
+  {cards.map((card) => (
+    <Card
+      key={card.name}
+      name={card.name}
+      type={card.type}
+      attack={card.attack}
+      defense={card.defense}
+    />
+  ))}
+</ul>
     </main>
   );
 }
