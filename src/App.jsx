@@ -12,11 +12,17 @@ const cards = [
 function App() {
   const [typeFilter, setTypeFilter] = useState("Todas");
   const [search, setSearch] = useState("");
+  const [sortByAttack, setSortByAttack] = useState(false);
   const [randomCard, setRandomCard] = useState(null);
 
-  const visibleCards = cards
+  let visibleCards = cards
     .filter((card) => typeFilter === "Todas" || card.type === typeFilter)
     .filter((card) => card.name.toLowerCase().includes(search.toLowerCase()));
+
+  if (sortByAttack) {
+    // cópia para não mexer no array original
+    visibleCards = [...visibleCards].sort((a, b) => b.attack - a.attack);
+  }
 
   function pickRandomCard() {
     const index = Math.floor(Math.random() * cards.length);
@@ -34,6 +40,9 @@ function App() {
         <button onClick={() => setTypeFilter("Todas")}>Todas</button>
         <button onClick={() => setTypeFilter("Criatura")}>Só criaturas</button>
         <button onClick={() => setTypeFilter("Feitiço")}>Só feitiços</button>
+        <button onClick={() => setSortByAttack(!sortByAttack)}>
+          {sortByAttack ? "Ordem original" : "Ordenar por ataque"}
+        </button>
         <button onClick={pickRandomCard}>Carta à sorte</button>
       </div>
 
@@ -61,6 +70,8 @@ function App() {
         </>
       )}
 
+      {visibleCards.length === 0 && <p>Nenhuma carta encontrada.</p>}
+
       <ul>
         {visibleCards.map((card) => (
           <Card
@@ -76,4 +87,4 @@ function App() {
   );
 }
 
-export default App;
+export default App; 
