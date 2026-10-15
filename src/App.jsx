@@ -12,6 +12,7 @@
 // (o que fizeste na aula 2).
 
 import Card from "./Card.jsx";
+import { useState } from "react";
 
 const cards = [
   { name: "Dragão de Cobalto", type: "Criatura", attack: 7, defense: 5 },
@@ -23,12 +24,26 @@ const cards = [
 
 
 function App() {
+  const [typeFilter, setTypeFilter] = useState("Todas");
+
+const visibleCards = cards.filter(
+  (card) => typeFilter === "Todas" || card.type === typeFilter,
+);
   return (
     <main>
       <h1>A minha coleção</h1>
-      <p>Tenho {cards.length} cartas</p>
-      <ul>
-  {cards.map((card) => (
+      <p>
+  Tenho {cards.length} cartas ({visibleCards.length} à vista)
+</p>
+
+<div>
+  <button onClick={() => setTypeFilter("Todas")}>Todas</button>
+  <button onClick={() => setTypeFilter("Criatura")}>Só criaturas</button>
+  <button onClick={() => setTypeFilter("Feitiço")}>Só feitiços</button>
+</div>
+
+<ul>
+  {visibleCards.map((card) => (
     <Card
       key={card.name}
       name={card.name}
